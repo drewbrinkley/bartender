@@ -86,39 +86,53 @@ def have_drinks():
         # call have_drinks() function again to loop user back to try again
         have_drinks()
     
-    print("exit have_drinks()")
+    print("exit have_drinks()") ### debugging string - delete in final code
 
 
 # define start() function that will be called to begin the game
 def start():
     print("start has been called") ### Debugging prompt - delete in final code
-    # call 'age()' function
+    # call 'age()' function to prompt for user's age
     age () 
     
-    # if-statement to confirm validity of user input for 'age'
+    # the following code block will execute based upon value return of 'age()' function
+    # if-statement runs when user entered age of 0 or less
     if age_num <= 0:
-        # print string to confirm user entered a number when prompted
+        # print string when user's age is less than or equal to 0
         print(f"I'm sorry, {name}. It's hard to play a game when you haven't even been born yet!")
+    # else-if-statement runs when user's age is greater than 0 and less than 15
     elif age_num > 0 and age_num < 15:
         print(f"I'm sorrry, {name}.  You are a little young to be drinking.  Try again when you're older...")
+    # else-statement runs when user's age is 15 or greater
     else:
         # print string 
-        print("next step...")
+        print("next step...")  ### debugging prompt - delete in final code
+        # call function 'have_drinks()' to prompt for user's first choice
         have_drinks()
 
+        # the following code block will execture based upon value returned from 'have_drinks()' function
+        # if-statement runs when user selected option 1
         if choice == 1:
             print("call home()")
+            # call 'home()' function
+            # home()
+        # else-if statement runs when user selected option 2
         elif choice == 2:
             print("call bar()")
+            # call 'bar()' function
+            # bar()
+        # else-statement runs when user selected option 3
         else:
             print("call hangover()")
+            # call hangover() function
+            # hangover()
         
         
 
     print("<<<< exit start()")  ### Debugging prompt - delete in final code
-   #### find out why variable has multiple values if start() loops
 
-### Game's main code block ###
+
+### ----- Game's main code block ------ ###
 
 # 1. Greeting
 # assign user input to variable 'name'
