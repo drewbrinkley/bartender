@@ -3,6 +3,20 @@
 # import random module from Python library
 import random
 
+### create variables ###
+
+
+
+### create lists ###
+
+# create list of drink choices, with additional to include options for the different categories
+drinks_list = ['beer', 'liquor', 'wine']
+beer_type = ['lager', 'IPA', 'stout', 'pilsner', '$1 draft']
+liquor_type = ['bourbon', 'scotch', 'tequila', 'vodka', 'gin']
+wine_type = ['red', 'white', 'Merlot', 'Pinot Noir', 'Pinot Grigio', 'Riesling', 'Cabernet Sauvignon', 'Syrah', 'White Zinfandel', 'Chardonnay', 'Sauvignon Blanc']
+
+### define functions ###
+
 # define function 'age()' to collect and validate user's age
 def age():
     print("age() has been called") ### Debugging prompt - delete in final code
