@@ -210,7 +210,7 @@ def home():
             # this code chunk will run if user selected 3
             else:
                 # call 'hangover()' function
-                print("call hangover()")
+                hangover()
             
         # else will run when user input was invalid (not a number or not in range)    
         else:
@@ -373,7 +373,7 @@ You have been arrested for an Underage DUI offense.""")
     elif sum(drink_count) * outcome < 10:
         print("You have made it to your destination")
         # call 'hangover()' function
-        # hangover()
+        hangover()
     elif sum(drink_count) * outcome < 20:
         print("call the cops()")
     else:
@@ -393,6 +393,23 @@ You have been arrested for an Underage DUI offense.""")
         print("call the cops()")
     else:
         end("You have been in a horrible car crash and have been transported to the hospital.\nDon't drink and drive!")
+
+
+# define 'hanover()' function
+def hangover():
+    random_outcome()
+    if sum(drink_count) * outcome <= 1:
+        end("You have made a healthy choice.\nThe latest research suggests even a moderate consumption of alcohol confers some health risk.")
+    elif sum(drink_count) * outcome < 8:
+        end("If you are going to enjoy alcohol, please continue to do so responsbily.")
+    elif sum(drink_count) * outcome < 16:
+        end("This round of drinking did not agree with you.\nYou wake up the next day with a hangover.\nPerhaps you should scale it back next time.")
+    else:
+        end(f"""Whoa - you really overdid it, {name}!
+You passed out after your evening of drinking and forgot to set your alarm.
+You then overslept and missed an important presentation at work and will likely face disciplinary action.
+Please try to enjoy your alcohol more responsibly next time.""")
+
 
 # define function 'end' to run when certain parameters will bring the game to an end; takes variable 'why' as argument
 def end(why):
@@ -435,9 +452,8 @@ def start():
             bar()
         # else-statement runs when user selected option 3
         else:
-            print("call hangover()")
             # call hangover() function
-            # hangover()
+            hangover()
         
         
 
