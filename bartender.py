@@ -24,8 +24,8 @@ wine_type = ['red', 'white', 'Merlot', 'Pinot Noir', 'Pinot Grigio', 'Riesling',
 # create empty list to hold drinks selected by user
 drink_selections = []
 
-# create empty list to hold drinks selected by user
-drink_count = []
+# create list with initial entry of 0 to hold drinks selected by user
+drink_count = [0]
 
 # create empty list to hold failed attempts
 attempts = []
@@ -205,8 +205,8 @@ def home():
                 print(drink_count)
             # this code chunk will run if user selected 2
             elif decision == 2:
-                # call 'bar()' function
-                bar()
+                # call 'leave_home()' function
+                leave_home()
             # this code chunk will run if user selected 3
             else:
                 # call 'hangover()' function
@@ -287,7 +287,7 @@ def bar():
             # this code chunk will run if user selected 2
             else:
                 # call 'leave()' function
-                print("call leave()")
+                leave_bar()
             
         # else will run when user input was invalid (not a number or not in range)    
         else:
@@ -347,18 +347,52 @@ I'm not able to serve you any more drinks now, {name}.""")
 
 # define 'random_outcome()' function
 def random_outcome():
-    # assign sum of values in list attempts[] to variable 'max'
-    max = sum(attempts)
+    # assign sum of values in list drink_count[] to variable 'max'
+    max = sum(drink_count)
     print(max)  ### debugging print - delete in final code
-    # assign random number between and value of variable 'max' to variable 'outcome'
-    outcome = random.randint(1, max)
+    # define global variable 'outcome' for use in other functions
+    global outcome
+    #if-statement runs to assign outcome value of 1 if user has not consumed any drinks yet
+    if max == 0:
+        outcome = 1
+    # else-statement assigns random number between and value of variable 'max' to variable 'outcome'
+    else:
+        outcome = random.randint(1, max)
     print(outcome)  ### debugging print - delete in final code
     # return value of variable 'outcome'
     return outcome
 
 
-# define 'leave()' function
+# define 'leave_bar()' function
+def leave_bar():
+    # call random outcome function
+    random_outcome()
+    if age_num < 21 and sum(drink_count) > 0:
+        end("""BUSTED!!! You got pulled over and the officer noticed you had alcohol on your breath.  
+You have been arrested for an Underage DUI offense.""")
+    elif sum(drink_count) * outcome < 10:
+        print("You have made it to your destination")
+        # call 'hangover()' function
+        # hangover()
+    elif sum(drink_count) * outcome < 20:
+        print("call the cops()")
+    else:
+        end("You have been in a horrible car crash and have been transported to the hospital.\nDon't drink and drive!")
 
+# define 'leave_home()' function
+def leave_home():
+    # call random outcome function
+    random_outcome()
+    if age_num < 21 and sum(drink_count) > 0:
+        end("""BUSTED!!! You got pulled over and the officer noticed you had alcohol on your breath.  
+You have been arrested for an Underage DUI offense.""")
+    elif sum(drink_count) * outcome < 10:
+        print("You have made it to your destination")
+        bar()
+    elif sum(drink_count) * outcome < 20:
+        print("call the cops()")
+    else:
+        end("You have been in a horrible car crash and have been transported to the hospital.\nDon't drink and drive!")
 
 # define function 'end' to run when certain parameters will bring the game to an end; takes variable 'why' as argument
 def end(why):
