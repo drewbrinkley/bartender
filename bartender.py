@@ -2,14 +2,15 @@
 
 # import random module from Python library
 import random
+from this import d
 
 
 ### create variables ###
 
 # create global variable 'drink_count' for use in other functions
-global drink_count
+#global drink_count
 # assign 0 to variable 'drink_count', which will track the number of consumed drinks
-drink_count = 0
+#drink_count = 0
 
 
 ### create lists ###
@@ -21,7 +22,10 @@ liquor_type = ['bourbon', 'scotch', 'tequila', 'vodka', 'gin']
 wine_type = ['red', 'white', 'Merlot', 'Pinot Noir', 'Pinot Grigio', 'Riesling', 'Cabernet Sauvignon', 'Syrah', 'White Zinfandel', 'Chardonnay', 'Sauvignon Blanc']
 
 # create empty list to hold drinks selected by user
-drinks_consumed = []
+drink_selections = []
+
+# create empty list to hold drinks selected by user
+drink_count = []
 
 # create empty list to hold failed attempts
 attempts = []
@@ -145,6 +149,8 @@ def home():
     print("home() has been called") ### Debugging prompt - delete in final code
     # assign 0 to variable 'i', which will track user's invalid inputs
     i = 0
+    # assign 0 to variable 'd', which will track the number of drinks consumed
+    d = 0
 
     # while loop created to run code as long as max failed inputs has not been reached
     # while will continue to loop as long as the sum of values in list 'attempts' is less than 4
@@ -184,12 +190,19 @@ def home():
             # if statement to call next function based upon user's selection
             # this code chunk will run if user selected 1
             if decision == 1:
+                print("start of if---")
+                print(drink_count)
                 # print string
                 print("You have elected to have a drink.")
                 # call 'order()' function to take drink order
                 order()
                 # print string prompting user to make another selection
                 print("had a drink, what now?")
+                # assigns value of 1 to 'd' to record invalid input
+                d = 1
+                # updates list 'drink_count' to add another value of 1
+                drink_count.append(d)
+                print(drink_count)
             # this code chunk will run if user selected 2
             elif decision == 2:
                 # call 'bar()' function
@@ -215,9 +228,11 @@ I'm not able to serve you any more drinks now, {name}.""")
 
 # define 'bar()' function
 def bar():
-    print("bar() has been called") ### Debugging prompt - delete in final code
+    print("Welcome to the Snake Pit bar!") ### Debugging prompt - delete in final code
     # assign 0 to variable 'i', which will track user's invalid inputs
     i = 0
+    # assign 0 to variable 'd', which will track user's drink consumption at the bar
+    d = 0
 
     # while loop created to run code as long as max failed inputs has not been reached
     # while will continue to loop as long as the sum of values in list 'attempts' is less than 4
@@ -256,12 +271,19 @@ def bar():
             # if statement to call next function based upon user's selection
             # this code chunk will run if user selected 1
             if decision == 1:
+                print("drinks at start of bar") #### debugging - delete in final
+                print(drink_count)
                 # print string
                 print("You have elected to have a drink.")
                 # call 'order()' function to take drink order
                 order()
                 # print string prompting user to make another selection
                 print("had a drink, what now?")
+                # assigns value of 1 to 'd' to record invalid input
+                d = 1
+                # updates list 'drink_count' to add another value of 1
+                drink_count.append(d)
+                print(drink_count)
             # this code chunk will run if user selected 2
             else:
                 # call 'leave()' function
@@ -304,6 +326,9 @@ def order():
         if drink_order in drinks_list:
             # ----- print string to debug - delete in final code
             print("pass.")
+            # add drink order to list 'drink_selections[]'
+            drink_selections.append(drink_order)
+            print(drink_selections) #### debugging prompt
             # return value of 'drink_order'
             return drink_order 
         # else will run when user input was invalid (did not match options in 'drinks_list[]')    
@@ -318,6 +343,21 @@ def order():
     # call function 'end()' to exit game based upon maximum failed inputs
     end(f"""You appear to be having problems communicating, which may mean you have had too much to drink.
 I'm not able to serve you any more drinks now, {name}.""")
+
+
+# define 'random_outcome()' function
+def random_outcome():
+    # assign sum of values in list attempts[] to variable 'max'
+    max = sum(attempts)
+    print(max)  ### debugging print - delete in final code
+    # assign random number between and value of variable 'max' to variable 'outcome'
+    outcome = random.randint(1, max)
+    print(outcome)  ### debugging print - delete in final code
+    # return value of variable 'outcome'
+    return outcome
+
+
+# define 'leave()' function
 
 
 # define function 'end' to run when certain parameters will bring the game to an end; takes variable 'why' as argument
