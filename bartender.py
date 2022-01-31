@@ -53,7 +53,6 @@ def age():
 
         print(it_is)  ### debugging prompt - delete in final code
         
-        
         # if-statement to confirm validity of user input for 'age_input'
         # if executes associated code block when 'age_input' succesfully converted to integer
         if it_is == True:
@@ -140,6 +139,119 @@ def have_drinks():
     end(f"""You appear to be having problems communicating, which may mean you have had too much to drink.
 I'm not able to serve you any more drinks now, {name}.""")
 
+
+# define 'home()' function
+def home():
+    print("home() has been called") ### Debugging prompt - delete in final code
+    # assign 0 to variable 'i', which will track user's invalid inputs
+    i = 0
+
+    # while loop created to run code as long as max failed inputs has not been reached
+    # while will continue to loop as long as the sum of values in list 'attempts' is less than 4
+    while sum(attempts) < 4:   
+        # assign user input to variable 'choice_input'
+        choice_input = input(f"""Type one of the following numbers to tell me what you would like to do:
+            1 - Have a drink
+            2 - Go to a bar for some drinks
+            3 - Call it a night
+            > """)
+            
+        print(f">>> {choice_input}")  ### Debugging prompt - delete in final code
+        
+        # use try...except block to vailidate user input
+        try:
+            # tests to see if the 'choice_input' value can be converted to an integer
+            int(choice_input)
+            # assigns True to variable 'it_is' if conversion is successful
+            it_is = True
+        except ValueError:
+            # assigns False to variable 'it_is' if conversion returns an error (user did not enter a number)
+            it_is = False
+
+        print(it_is)  ### debugging prompt - delete in final code
+        
+        # if-statement to confirm validity of user input for 'choice_input'
+        # code for if will run when user input a 1, 2, or 3
+        if it_is == True and (0 < int(choice_input) < 4):
+            # ----- print string to debug - delete in final code
+            print("pass.")
+            # convert 'choice_input' to integer and assign to 'decision'
+            decision = int(choice_input)
+            print(f"---{decision}") #### debugging print - delete in final code
+            print("# failed attempts")  ### debugging
+            print(sum(attempts))  ### debugging
+            
+            # if statement to call next function based upon user's selection
+            # this code chunk will run if user selected 1
+            if decision == 1:
+                # print string
+                print("You have elected to have a drink.")
+                # call 'order()' function to take drink order
+                order()
+                # print string prompting user to make another selection
+                print("had a drink, what now?")
+            # this code chunk will run if user selected 2
+            elif decision == 2:
+                # call 'bar()' function
+                print("call bar()")
+            # this code chunk will run if user selected 3
+            else:
+                # call 'hangover()' function
+                print("call hangover()")
+            
+        # else will run when user input was invalid (not a number or not in range)    
+        else:
+            # print string to prompt user to re-enter selection
+            print("You did not enter a valid selection.  Please try again.")
+            # assigns value of 1 to 'i' to record invalid input
+            i = 1
+            # updates list 'attempts' to add another value of 1
+            attempts.append(i)
+    
+    # call function 'end()' to exit game based upon maximum failed inputs
+    end("""You appear to be having problems communicating, which may mean you have had too much to drink.
+I'm not able to serve you any more drinks now, {name}.""")
+
+
+# define 'order()' function
+def order():
+    print("order() has been called") ### Debugging prompt - delete in final code
+    # assign 0 to variable 'i', which will track user's invalid inputs
+    i = 0
+
+    # while loop created to run code as long as max failed inputs has not been reached
+    # while will continue to loop as long as the sum of values in list 'attempts' is less than 4
+    while sum(attempts) < 4:   
+        # print string
+        print("Here's what your drink choices are:")
+        # print values in list 'drinks_list[]' to provide menu of choices to user
+        print(drinks_list)
+        # assigns user input() for selection to variable 'drink_order'
+        drink_order = input("What kind of drink would you like?\n> ")
+            
+        print(f">>> {drink_order}")  ### Debugging prompt - delete in final code
+        
+        # if-statement to confirm validity of user input for 'drink_order'
+        # code for if will run when user's input matched a value in list 'drinks_list[]'
+        if drink_order in drinks_list:
+            # ----- print string to debug - delete in final code
+            print("pass.")
+            # return value of 'drink_order'
+            return drink_order 
+        # else will run when user input was invalid (did not match options in 'drinks_list[]')    
+        else:
+            # print string to prompt user to re-enter selection
+            print("I did not recognize your order.  Please try again.")
+            # assigns value of 1 to 'i' to record invalid input
+            i = 1
+            # updates list 'attempts' to add another value of 1
+            attempts.append(i)
+    
+    # call function 'end()' to exit game based upon maximum failed inputs
+    end("""You appear to be having problems communicating, which may mean you have had too much to drink.
+I'm not able to serve you any more drinks now, {name}.""")
+
+
 # define function 'end' to run when certain parameters will bring the game to an end; takes variable 'why' as argument
 def end(why):
     # prints variable 'why' when function is called
@@ -173,9 +285,8 @@ def start():
         # the following code block will execture based upon value returned from 'have_drinks()' function
         # if-statement runs when user selected option 1
         if choice == 1:
-            print("call home()")
             # call 'home()' function
-            # home()
+            home()
         # else-if statement runs when user selected option 2
         elif choice == 2:
             print("call bar()")
