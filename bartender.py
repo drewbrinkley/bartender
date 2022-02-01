@@ -370,12 +370,13 @@ def leave_bar():
     if age_num < 21 and sum(drink_count) > 0:
         end("""BUSTED!!! You got pulled over and the officer noticed you had alcohol on your breath.  
 You have been arrested for an Underage DUI offense.""")
-    elif sum(drink_count) * outcome < 10:
+    elif sum(drink_count) * outcome < 6:
         print("You have made it to your destination")
         # call 'hangover()' function
         hangover()
     elif sum(drink_count) * outcome < 20:
-        print("call the cops()")
+        cops()
+        hangover()
     else:
         end("You have been in a horrible car crash and have been transported to the hospital.\nDon't drink and drive!")
 
@@ -386,13 +387,50 @@ def leave_home():
     if age_num < 21 and sum(drink_count) > 0:
         end("""BUSTED!!! You got pulled over and the officer noticed you had alcohol on your breath.  
 You have been arrested for an Underage DUI offense.""")
-    elif sum(drink_count) * outcome < 10:
+    elif sum(drink_count) * outcome < 6:
         print("You have made it to your destination")
         bar()
     elif sum(drink_count) * outcome < 20:
-        print("call the cops()")
+        cops()
+        bar()
     else:
         end("You have been in a horrible car crash and have been transported to the hospital.\nDon't drink and drive!")
+
+
+def cops():
+    options = ['flee', 'pull over']
+    print("A police officer has just turned onto the road and is following you.")
+    random_outcome()
+    if sum(drink_count) * outcome < 10:
+        print("The officer turns on his blue lights, but then does a U-turn to chase a speeder going in the other direction.\nWhew, that way close!")
+    else:
+        print("You see blue lights behind you.  Looks like you are being pulled over.  What do you do?")
+        print(options)
+        reaction = input("> ")
+        if reaction == 'flee':
+            random_outcome()
+            if sum(drink_count) * outcome < 8:
+                print("Against all odds, you somehow evade the officer.  Still, this was probably not a smart decision")
+            else:
+                end("""You get caught and now face charges for DUI, reckless driving, evading and fleeing, and speeding.
+Best case, you can expect to spend a couple thousand dollars in attorney fees.
+More realistically, you are going to lose your driver's license, have to do classes, will be required to have an
+interlock device in your vehicle, and be at the mercy of the court regarding jail time and fines.
+You will be paying for this decision, literally and figuratively, for several years.""")
+        elif reaction == 'pull over':
+            random_outcome()
+            if sum(drink_count) * outcome < 8:
+                print("The officer received an emergency call while on scene and lets you got with a warning to slow down.")
+            else:
+                end("""You get arrested for DUI.  
+Look forward to a suspension of your driver's license, alcohol classes, and having to install an interlock device in your vehicle.
+Drinking and driving is a serious offense.  At least no one got hurt this time.""")
+        else:
+            print("That was not a valid response.")
+            end("""You panic when you see the blue lights, knowing you have alcohol in your system.
+In your moment of indecision, you drift out of your lane and strike another vehicle.
+Fortunately, no one is injured.  However, this is going to create some serious legal and financial issues for you.
+Drinking and driving is a serious offense.""")
 
 
 # define 'hanover()' function
@@ -400,10 +438,19 @@ def hangover():
     random_outcome()
     if sum(drink_count) * outcome <= 1:
         end("You have made a healthy choice.\nThe latest research suggests even a moderate consumption of alcohol confers some health risk.")
+    elif sum(drink_count) * outcome < 8 and age_num < 21:
+        end("You are too young to legally drink alcohol, but you managed to get away with it this time.")
     elif sum(drink_count) * outcome < 8:
         end("If you are going to enjoy alcohol, please continue to do so responsbily.")
+    elif sum(drink_count) * outcome < 16 and age_num < 21:
+        end(f"Uh oh, {name}.\nYou wake up the next day with a hangover, and your parents grounded you for drinking.\nPerhaps you should wait until you're 21.")
     elif sum(drink_count) * outcome < 16:
         end("This round of drinking did not agree with you.\nYou wake up the next day with a hangover.\nPerhaps you should scale it back next time.")
+    elif age_num < 21:
+        end(f"""Whoa - you really overdid it, {name}!
+You passed out after your evening of drinking and forgot to set your alarm.
+You then overslept and missed a midterm exam.
+Maybe you should think about the consequences of your actions next time...""")
     else:
         end(f"""Whoa - you really overdid it, {name}!
 You passed out after your evening of drinking and forgot to set your alarm.
