@@ -2,7 +2,6 @@
 
 # import random module from Python library
 import random
-from this import d
 
 
 ### create variables ###
@@ -32,8 +31,12 @@ attempts = []
 
 ### define functions ###
 
-# define function 'age()' to collect and validate user's age
 def age():
+    """This function is called to prompt the user to enter his/her age via input().  
+    Validate that the entry is a number, and if so convert it to integer, assign to a global variable, and return for use in other functions.
+    Invalid entries are added to a list that maintains their running total.
+    A while loop will terminate the game when the maximum invalid entries is reached.
+    """
     print("age() has been called") ### Debugging prompt - delete in final code
     # assign 0 to variable 'i', which will track user's invalid inputs
     i = 0
@@ -86,8 +89,12 @@ def age():
 I'm not able to serve you any more drinks now, {name}.""")
     
 
-# define function 'have_drinks()' to get user input on initial drink decision
 def have_drinks():
+    """When called, this function will prompt the user to choose if and where to have drinks via input().  
+    Validate that the entry is a number, and if so convert it to integer, assign to a global variable, and return for use in other functions.
+    Invalid entries are added to a list that maintains their running total.
+    A while loop will terminate the game when the maximum invalid entries is reached.
+    """
     print("have_drinks() has been called") ### Debugging prompt - delete in final code
     # assign 0 to variable 'i', which will track user's invalid inputs
     i = 0
@@ -129,7 +136,7 @@ def have_drinks():
             # return value for 'choice' to use elsewhere
             print("# failed attempts")  ### debugging
             print(sum(attempts))  ### debugging
-            return choice #, fails
+            return choice
         # else will run when user input was invalid (not a number or not in range)    
         else:
             # print string to prompt user to re-enter selection
@@ -144,8 +151,13 @@ def have_drinks():
 I'm not able to serve you any more drinks now, {name}.""")
 
 
-# define 'home()' function
 def home():
+    """This function executes when the user chooses to have drinks at home.  Via input(), the user will make a choice to decide if and where to have a drink.
+    Validate that the entry is a number, and if so convert it to integer and call the next function associated with that choice.
+    Invalid entries are added to a list that maintains their running total.
+    Updates a list to maintain the number of drinks consumed if the user decides to have a drink.
+    A while loop will terminate the game when the maximum invalid entries is reached.
+    """
     print("home() has been called") ### Debugging prompt - delete in final code
     # assign 0 to variable 'i', which will track user's invalid inputs
     i = 0
@@ -226,8 +238,13 @@ def home():
 I'm not able to serve you any more drinks now, {name}.""")
 
 
-# define 'bar()' function
 def bar():
+    """This function executes when the user chooses to have drinks at a bar.  Via input(), the user will make a choice to decide to have a drink or not.
+    Validate that the entry is a number, and if so convert it to integer and call the next function associated with that choice.
+    Invalid entries are added to a list that maintains their running total.
+    Updates a list to maintain the number of drinks consumed if the user decides to have a drink.
+    A while loop will terminate the game when the maximum invalid entries is reached.
+    """
     print("Welcome to the Snake Pit bar!") ### Debugging prompt - delete in final code
     # assign 0 to variable 'i', which will track user's invalid inputs
     i = 0
@@ -303,8 +320,12 @@ def bar():
 I'm not able to serve you any more drinks now, {name}.""")
 
 
-# define 'order()' function
 def order():
+    """This function executes when the user chooses to have a drinks.  Via input(), the user will make a choice to place a drink order.
+    Validate that the entry is on the drink list, and if so add it to the list that maintains drink selections.
+    Invalid entries are added to a list that maintains their running total.
+    A while loop will terminate the game when the maximum invalid entries is reached.
+    """
     print("order() has been called") ### Debugging prompt - delete in final code
     # assign 0 to variable 'i', which will track user's invalid inputs
     i = 0
@@ -345,8 +366,14 @@ def order():
 I'm not able to serve you any more drinks now, {name}.""")
 
 
-# define 'random_outcome()' function
 def random_outcome():
+    """When this function is called, it will generate and return a global variable 'outcome' that can be used in other functions. 
+    Validate that the entry is a number, and if so convert it to integer and call the next function associated with that choice.
+    The variable is based upon the number of drinks the user has consumed, as recorded in the list drink_count[].
+    If the user has had 0 drinks, then 'outcome' is assigned a value of 1.
+    Otherwise, 'outcome' is assigned a random value that falls between 1 and the total number of drinks consumed, inclusively.
+    The maximum possible value of 'outcome' increases proportional to the number of drinks consumed.
+    """
     # assign sum of values in list drink_count[] to variable 'max'
     max = sum(drink_count)
     print(max)  ### debugging print - delete in final code
@@ -363,78 +390,142 @@ def random_outcome():
     return outcome
 
 
-# define 'leave_bar()' function
 def leave_bar():
-    # call random outcome function
+    """This function executes when the user chooses to leave the bar.  
+    The function calls upon random_outcome() to generate a value for variable 'outcome' to be multiplied by to total number of drinks consumed.
+    The next function called is based upon where the result of that calculation falls into the if-else if-else statement.
+    There is also contains a trap to catch minors driving after they consumed alcohol.
+    """
+    # call random_outcome() function
     random_outcome()
+    # if-statement that will trigger the next function to be called
+    # if executes when the user is a minor and has consumed alcohol
     if age_num < 21 and sum(drink_count) > 0:
         end("""BUSTED!!! You got pulled over and the officer noticed you had alcohol on your breath.  
-You have been arrested for an Underage DUI offense.""")
+You have been arrested for an Underage DUI offense and for possessing a fake ID.""")
+    # else-if executes when product of 'outcome' and sum of drink_count is less than 6
     elif sum(drink_count) * outcome < 6:
         print("You have made it to your destination")
         # call 'hangover()' function
         hangover()
+    # else-if executes when product of 'outcome' and sum of drink_count is less than 20
     elif sum(drink_count) * outcome < 20:
+        # call cops() function
         cops()
+        # call hangover() function, unless game is ended by the result of cops()
         hangover()
+    # else executes when none of the above statements are True
     else:
+        # call end() function to end game
         end("You have been in a horrible car crash and have been transported to the hospital.\nDon't drink and drive!")
 
-# define 'leave_home()' function
+
 def leave_home():
-    # call random outcome function
+    """This function executes when the user chooses to leave home to go to a bar.  
+    The function calls upon random_outcome() to generate a value for variable 'outcome' to be multiplied by to total number of drinks consumed.
+    The next function called is based upon where the result of that calculation falls into the if-else if-else statement.
+    There is also contains a trap to catch minors driving after they consumed alcohol.
+    """
+    # call random_outcome() function
     random_outcome()
+    # if-statement that will trigger the next function to be called
+    # if executes when the user is a minor and has consumed alcohol
     if age_num < 21 and sum(drink_count) > 0:
         end("""BUSTED!!! You got pulled over and the officer noticed you had alcohol on your breath.  
 You have been arrested for an Underage DUI offense.""")
+    # else-if executes when product of 'outcome' and sum of drink_count is less than 6
     elif sum(drink_count) * outcome < 6:
+        # print string
         print("You have made it to your destination")
+        # call bar() function
         bar()
+    # else-if executes when product of 'outcome' and sum of drink_drink count is less than 20
     elif sum(drink_count) * outcome < 20:
+        # call cops() function
         cops()
+        # call bar() function, if game is not ended by result of cops()
         bar()
+    # else executes when none of the above statements are True
     else:
+        # call end() function to end game
         end("You have been in a horrible car crash and have been transported to the hospital.\nDon't drink and drive!")
 
 
 def cops():
+    """This function executes when the user chooses an option that will cause him/her to drive.  
+    The function calls upon random_outcome() to generate a value for variable 'outcome' to be multiplied by to total number of drinks consumed.
+    The next function called is based upon where the result of that calculation falls into the if-else if-else statement.
+    There is also a choice the user must make via input() to decide what to do if they are being pulled over by the police.
+    """
+    # create list named 'options' with 2 possible values
     options = ['flee', 'pull over']
+    # print string
     print("A police officer has just turned onto the road and is following you.")
+    # call random_outcome() function
     random_outcome()
+    # if-statement to determine whether the user will be pulled over by the police
+    # if executes when product of 'outcome' and sum of drink_count is less than 10; user will not be pulled over and game continues
     if sum(drink_count) * outcome < 10:
+        # print string
         print("The officer turns on his blue lights, but then does a U-turn to chase a speeder going in the other direction.\nWhew, that way close!")
+    # else executes when if is False; user is pulled over
     else:
+        # print string
         print("You see blue lights behind you.  Looks like you are being pulled over.  What do you do?")
+        # print values in list 'options'
         print(options)
+        # assigns user input() to variable 'reaction'
         reaction = input("> ")
+        # if-statement to validate user's input
+        # if executes if user input 'flee'
         if reaction == 'flee':
+            # call random_outcome() function
             random_outcome()
+            # if-statement to determine result of police encounter
+            # if executes when product of 'outcome' and sum of drink_count is less than 8; user will get away and game continues
             if sum(drink_count) * outcome < 8:
                 print("Against all odds, you somehow evade the officer.  Still, this was probably not a smart decision")
+            # else executes when if is False
             else:
+                # call end() function to end game
                 end("""You get caught and now face charges for DUI, reckless driving, evading and fleeing, and speeding.
 Best case, you can expect to spend a couple thousand dollars in attorney fees.
 More realistically, you are going to lose your driver's license, have to do classes, will be required to have an
 interlock device in your vehicle, and be at the mercy of the court regarding jail time and fines.
 You will be paying for this decision, literally and figuratively, for several years.""")
+        # else-if executes when user input 'pull over'
         elif reaction == 'pull over':
+            # call random_outcome() function
             random_outcome()
+            # if-statement to determine outcome of encounter
+            # if executes when product of 'outcome' and sum of drink_count is less than 8; user will not be arrested and game continues
             if sum(drink_count) * outcome < 8:
+                # print string
                 print("The officer received an emergency call while on scene and lets you got with a warning to slow down.")
+            # else executes when if is False
             else:
+                # call end() function to end game
                 end("""You get arrested for DUI.  
 Look forward to a suspension of your driver's license, alcohol classes, and having to install an interlock device in your vehicle.
 Drinking and driving is a serious offense.  At least no one got hurt this time.""")
+        # else excecutes when user did not enter a valid input
         else:
+            # print string
             print("That was not a valid response.")
+            # call end() function to end game
             end("""You panic when you see the blue lights, knowing you have alcohol in your system.
 In your moment of indecision, you drift out of your lane and strike another vehicle.
 Fortunately, no one is injured.  However, this is going to create some serious legal and financial issues for you.
 Drinking and driving is a serious offense.""")
 
 
-# define 'hanover()' function
 def hangover():
+    """This function executes when the user's choices have led to the end of the game and the game has not otherwise ended as the result of another function.
+    The function calls upon random_outcome() to generate a value for variable 'outcome' to be multiplied by to total number of drinks consumed.
+    The next function called is based upon where the result of that calculation falls into the if-else if-else statement.
+    There are also different outcomes for users who are minors vs those who are 21 or over.
+    """
+    # call random_outcome() function
     random_outcome()
     if sum(drink_count) * outcome <= 1:
         end("You have made a healthy choice.\nThe latest research suggests even a moderate consumption of alcohol confers some health risk.")
@@ -458,29 +549,37 @@ You then overslept and missed an important presentation at work and will likely 
 Please try to enjoy your alcohol more responsibly next time.""")
 
 
-# define function 'end' to run when certain parameters will bring the game to an end; takes variable 'why' as argument
 def end(why):
+    """The game will end when this function executes.
+    This function may be called when the result of the user's choice(s) led to the end of the game, or when the user exceeds the max allowable invalid inputs.  
+    The function takes variable 'why' as an argument and will print 'why' when called.
+    The function uses the built-in function exit() to end the script.
+    """
     # prints variable 'why' when function is called
     print(why)
     # exits program, without error message
     exit(0)
 
-# define start() function that will be called to begin the game
+
 def start():
+    """This function can be considered the "main" function for this script.  
+    It executes when the game begins and will trigger other functions based upon the user's initial input. 
+    The function contains an if-else if-else statement to end the game when users input an age that does not meet a minimum value. 
+    """
     print("start has been called") ### Debugging prompt - delete in final code
         
     # call 'age()' function to prompt for user's age
     age () 
     
-    print(f">from age>>>> {attempts[:]}")
+    print(f">from age>>>> {attempts[:]}")  ### debugging print
     # the following code block will execute based upon value return of 'age()' function
     # if-statement runs when user entered age of 0 or less
     if age_num <= 0:
         # print string when user's age is less than or equal to 0
-        print(f"I'm sorry, {name}. It's hard to play a game when you haven't even been born yet!")
+        end(f"I'm sorry, {name}. It's hard to play a game when you haven't even been born yet!")
     # else-if-statement runs when user's age is greater than 0 and less than 15
     elif age_num > 0 and age_num < 15:
-        print(f"I'm sorrry, {name}.  You are a little young to be drinking.  Try again when you're older...")
+        end(f"I'm sorrry, {name}.  You are a little young to be drinking.  Try again when you're older...")
     # else-statement runs when user's age is 15 or greater
     else:
         # print string 
